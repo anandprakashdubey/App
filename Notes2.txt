@@ -1,0 +1,24 @@
+https://www.youtube.com/watch?v=tF2JS6TGc3g
+
+https://learn.microsoft.com/en-gb/azure/active-directory-b2c/azure-monitor
+
+https://learn.microsoft.com/en-us/azure/event-hubs/process-data-azure-stream-analytics
+
+B2C-Log-Analytics-For-UJR
+
+AuditLogs
+| where TimeGenerated  > ago(90d)
+| where OperationName contains "issue"
+| extend  UserId=extractjson("$.[0].id",tostring(TargetResources))
+| extend Policy=extractjson("$.[1].value",tostring(AdditionalDetails))
+| summarize SignInCount = count() by Policy, OperationName
+| order by SignInCount desc  nulls last
+
+AuditLogs
+| where TimeGenerated  > ago(90d)
+| where OperationName contains "issue"
+| extend  UserId=extractjson("$.[0].id",tostring(TargetResources))
+| extend Policy=extractjson("$.[1].value",tostring(AdditionalDetails))
+| summarize SignInCount = count() by Policy
+| order by SignInCount desc  nulls last
+| render  piechart

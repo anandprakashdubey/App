@@ -1,0 +1,37 @@
+Microsoft Entra ID P2 Trial - 2 March to 2 April Trial
+JohnDoe@pluralsightacc.onmicrosoft.com  / Warlock@#9977
+
+
+azmarchdemo@outlook.com
+March@#123456
+
+ananddubey@azmarchdemooutlook.onmicrosoft.com
+Joku213193 / Ireland@#123456
+
+************************************************************************ Azure B2C Policy ****************************************
+Policy Keys - 
+
+B2C_1A_TokenSigningKeyContainer
+B2C_1A_TokenEncryptionKeyContainer
+
+IdentityExperienceFramework 2225f822-48c5-4363-a634-444819385216
+
+ProxyIdentityExperienceFramework 6eb59e53-e0ac-40f4-9e9d-777a51fba40c
+
+
+https://bitsb2cdemo.b2clogin.com/bitsb2cdemo.onmicrosoft.com/oauth2/v2.0/authorize?p=B2C_1A_PROFILEEDIT&client_id=9bb4ab17-ffb6-45d3-b039-955353a3c4c5&nonce=defaultNonce&redirect_uri=https%3A%2F%2Fjwt.ms&scope=openid&response_type=id_token&prompt=login
+
+
+b2c/siem
+
+
+The current user is a classic administrator on the subscription 'b0f2fb5a-a21a-4585-a331-ecdee69ad15d'. The user needs Microsoft.Authorization's Owner role on the subscription to create managed services resources.
+
+https://ishidaicareb2cdev.b2clogin.com/ishidaicareb2cdev.onmicrosoft.com/oauth2/v2.0/authorize?p=B2C_1A_SIGNUP_SIGNIN&client_id=831c5182-8b76-41e9-b802-a5fcdda1f516&nonce=defaultNonce&redirect_uri=https%3A%2F%2Flocalhost%3A7030&scope=openid&response_type=id_token&prompt=login
+
+
+
+extension app 
+
+client id - eaa0e8d6-9534-4959-8867-72df829451c2
+object id - 125bd887-f801-4051-9cdd-7531c2a93f28

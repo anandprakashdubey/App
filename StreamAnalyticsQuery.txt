@@ -1,0 +1,56 @@
+with events as 
+(
+
+    SELECT 
+            arrayElement.arrayValue.*
+        FROM 
+            [azb2ceventhubforujr] rawlog
+        CROSS APPLY GetArrayElements(rawlog.records) As arrayElement
+    
+),
+additionalDetails as
+(
+    SELECT
+        e.properties.id,
+        details.ArrayValue.[Key],
+        details.ArrayValue.[Value]
+    FROM 
+        events as e
+    CROSS APPLY GetArrayElements(e.properties.additionalDetails) as details
+),
+target as 
+(
+    SELECT
+    e.properties.id as propertyId,
+    target.ArrayValue.id,
+    target.ArrayValue.type
+    FROM
+    events e
+    CROSS APPLY GetArrayElements (e.properties.targetResources) as target
+) 
+
+SELECT
+    SYSTEM.TIMESTAMP() AS insert_time,
+    e.properties.correlationId as correlation_id,
+    e.properties.id as b2c_event_id,
+    t.id as object_id,
+    e.properties.activityDateTime as transaction_start,
+    e.properties.activityDateTime as transaction_end,
+    'OAUTH2/AUTHORIZE' as 'resource_id',
+    e.properties.result as journey_outcome,
+    adPolicy.[value]as policyName,    
+    adApp.[value] as applicationId
+into
+[ujr-sql-output]
+FROM
+    events e
+JOIN additionalDetails adPolicy on 
+    adPolicy.id = e.properties.id and datediff(minute,e,adPolicy) between 0 and 0
+JOIN additionalDetails adApp on 
+    adApp.id = e.properties.id  and datediff(minute,e,adApp) between 0 and 0
+JOIN target t on 
+    t.propertyId = e.properties.id and t.type = 'User' and datediff(minute,e,t) between 0 and 0
+where
+adPolicy.[Key] ='PolicyId' and adApp.[Key] = 'ApplicationId' and
+((e.properties.activityDisplayName = 'Issue an id_token to the application' and e.properties.result = 'success') or
+e.properties.result <> 'success')
